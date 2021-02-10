@@ -1,0 +1,82 @@
+#include<VirtualWire.h>
+#include<Servo.h>
+int in1 = 9;  //Motor A 
+int in2 = 8;   //Motor A 
+int in3 = 11;  // Motor B
+int in4 = 10;    //Motor A 
+int enA = 5; // pwm Motor A 
+int enB = 6;  // pwm Motor B
+const int datain = 12;
+void setup() {
+  // put your setup code here, to run once:
+  vw_set_ptt_inverted(true);
+  vw_set_rx_pin(datain);
+  vw_setup(4000); // 4Kbps 
+pinMode(in1,OUTPUT);
+pinMode(in2,OUTPUT);
+pinMode(in3,OUTPUT);
+pinMode(in4,OUTPUT);
+pinMode(in4,OUTPUT);
+pinMode(enA,OUTPUT);
+pinMode(enB,OUTPUT);
+  vw_rx_start();
+  Serial.println(9600);
+pinMode(3,OUTPUT); 
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  uint8_t buf[VW_MAX_MESSAGE_LEN];
+  uint8_t buflen = VW_MAX_MESSAGE_LEN;
+  if (vw_get_message(buf, &buflen))
+  {
+    Serial.println(buf[0]);
+    if(buf[0] =='1')
+    {
+  analogWrite(enA, 100);
+  analogWrite(enB, 100);
+  digitalWrite(in1,HIGH);
+digitalWrite(in2,LOW);
+digitalWrite(in3,HIGH);
+digitalWrite(in4,LOW);
+    }
+    if(buf[0]=='0')
+    {
+  analogWrite(enA, 0);
+  analogWrite(enB, 0);
+  digitalWrite(in1,HIGH);
+digitalWrite(in2,LOW);
+digitalWrite(in3,HIGH);
+digitalWrite(in4,LOW);
+
+      Serial.println("Rec_data_2");
+    }
+    if(buf[0]=='2'){
+  analogWrite(enA, 255);
+  analogWrite(enB, 255);
+  digitalWrite(in1,LOW);
+digitalWrite(in2,LOW);
+digitalWrite(in3,LOW);
+digitalWrite(in4,HIGH);
+      Serial.println("Rec_data_3");
+    }
+    if(buf[0]=='3'){
+  analogWrite(enA, 255);
+  analogWrite(enB, 255);
+  digitalWrite(in1,LOW);
+digitalWrite(in2,HIGH);
+digitalWrite(in3,LOW);
+digitalWrite(in4,LOW);
+      Serial.println("Rec_data_4");
+    }
+    if(buf[0]=='4'){
+  analogWrite(enA, 255);
+  analogWrite(enB, 255);
+  digitalWrite(in1,LOW);
+digitalWrite(in2,HIGH);
+digitalWrite(in3,LOW);
+digitalWrite(in4,HIGH);
+      Serial.println("Rec_data_5"); 
+    }
+  }
+}
