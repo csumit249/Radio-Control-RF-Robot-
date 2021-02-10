@@ -1,0 +1,64 @@
+#include <VirtualWire.h>
+int ledPin = 11;
+const int buttonPin = 8;     // the number of the pushbutton pin
+const int buttonPin_1 = 7;
+const int buttonPin_2 = 4;
+const int buttonPin_3 = 2;
+//int buttonState = 0; 
+char *data;
+void setup() 
+{
+  Serial.begin(9600);
+  pinMode(ledPin,OUTPUT);
+  pinMode(buttonPin, INPUT);
+  pinMode(buttonPin_1, INPUT);
+  pinMode(buttonPin_2, INPUT);
+  pinMode(buttonPin_3, INPUT);
+  vw_set_ptt_inverted(true);
+  vw_set_tx_pin(12);
+  vw_setup(4000);
+}
+
+void loop()
+{
+  int buttonState = digitalRead(buttonPin);
+  int buttonState_1 = digitalRead(buttonPin_1);
+  int buttonState_2 = digitalRead(buttonPin_2);
+  int buttonState_3 = digitalRead(buttonPin_3);
+   
+   if (buttonState == HIGH) {
+      data="1";
+  vw_send((uint8_t *)data, strlen(data));
+  vw_wait_tx();
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Data_1");
+  }
+  else if(buttonState_1 == HIGH){
+          data="2";
+  vw_send((uint8_t *)data, strlen(data));
+  vw_wait_tx();
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Data_2");
+  }
+   else if(buttonState_2 == HIGH){
+          data="3";
+  vw_send((uint8_t *)data, strlen(data));
+  vw_wait_tx();
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Data_3");
+  }
+   else if(buttonState_3 == HIGH){
+          data="4";
+  vw_send((uint8_t *)data, strlen(data));
+  vw_wait_tx();
+    digitalWrite(ledPin, HIGH);
+    Serial.println("Data_4");
+  }
+  else {
+    data="0";
+  vw_send((uint8_t *)data, strlen(data));
+  vw_wait_tx();
+    digitalWrite(ledPin, LOW);
+    Serial.println("No_data");
+  }
+}
