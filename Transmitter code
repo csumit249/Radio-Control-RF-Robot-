@@ -1,3 +1,10 @@
+/* Author : Sumit chatterjee
+ *  Team : AICRA (Technoxian)
+ *  ========================================================================================================================================================
+ *  The given Code is of Transmitter for RF Module based control BOT with 4 different direction of motion i.e Forward , Right, Left, Backward by PUSH-Button 
+ *  ========================================================================================================================================================
+ */
+
 #include <VirtualWire.h>
 int ledPin = 11;
 const int buttonPin = 8;     // the number of the pushbutton pin
